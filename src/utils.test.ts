@@ -1,4 +1,5 @@
 import { OrderType, UserType } from "./esempio/types";
+import { newOrder } from "./utils";
 
 describe("testcase giftcard shop", () =>{
     
@@ -13,6 +14,7 @@ describe("testcase giftcard shop", () =>{
         }
         const order: OrderType = newOrder(user);
         expect(order.user).toBe(user);
+        expect(order.creationDate).toBe(order.updateDate);
     })
 
     it("create order with no name", () =>{
@@ -24,10 +26,10 @@ describe("testcase giftcard shop", () =>{
             eMail: "mail@example.com"
         }
         
-        expect(newOrder(user)).toThrow("invalid name");
+        expect(() =>newOrder(user)).toThrow("invalid name");
     })
 
-    it("create order with no ", () =>{
+    it("create order with no surname", () =>{
         //pass wrong user and expect error
         const user: UserType = {
             name: "enrico",
@@ -35,7 +37,7 @@ describe("testcase giftcard shop", () =>{
             codiceFiscale: "abcabc12a01f205a",
             eMail: "mail@example.com"
         }
-        expect(newOrder(user)).toThrow("invalid surname");
+        expect(() => newOrder(user)).toThrow("invalid surname");
     })
 
     it("create order with no codice fiscale", () =>{
@@ -46,7 +48,7 @@ describe("testcase giftcard shop", () =>{
             codiceFiscale: "",
             eMail: "mail@example.com"
         }
-        expect(newOrder(user)).toThrow("invalid codice fiscale");
+        expect(() =>newOrder(user)).toThrow("invalid codice fiscale");
     })
 
     it("create order with no email", () =>{
@@ -57,7 +59,7 @@ describe("testcase giftcard shop", () =>{
             codiceFiscale: "abcabc12a01f205a",
             eMail: ""
         }
-        expect(newOrder(user)).toThrow("invalid email");
+        expect(() =>newOrder(user)).toThrow("invalid email");
     })
 
     it("create order with wrong email", () =>{
@@ -68,7 +70,7 @@ describe("testcase giftcard shop", () =>{
             codiceFiscale: "abcabc12a01f205a",
             eMail: "mailsbagliata.com"
         }
-        expect(newOrder(user)).toThrow("invalid email");
+        expect(() =>newOrder(user)).toThrow("invalid email");
      })
 
     it("create order with wrong codice fiscale", () =>{
@@ -79,10 +81,7 @@ describe("testcase giftcard shop", () =>{
         codiceFiscale: "codice fiscale errato",
         eMail: "mail@example.com"
         }
-        expect(newOrder(user)).toThrow("invalid codice fiscale");
+        expect(() =>newOrder(user)).toThrow("invalid codice fiscale");
     })
 
-
-
-    
 })
