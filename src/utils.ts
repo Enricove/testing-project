@@ -31,6 +31,7 @@ export const addGiftcard = (giftcard: GiftcardType) :OrderType => {//must return
     //validation
     if(giftcard.type!="cartacea"&&giftcard.type!="digitale") throw new TypeError("invalid giftcard type")
     if(!Number.isInteger(giftcard.amount)) throw new TypeError("invalid giftcard amount")
+    if(giftcard.amount<=0) throw new TypeError("negative amount of giftcards")
     if(giftcard.value!=10&&giftcard.value!=20&&giftcard.value!=50&&giftcard.value!=100)throw new TypeError ("invalid giftcard value");
 
     const now: Date = new Date;

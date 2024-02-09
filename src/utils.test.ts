@@ -167,10 +167,19 @@ describe("testcase add giftcard", ()=>{
     it("add gift card of invalid amount", () =>{
         const giftCard: GiftcardType= {
             amount: 1.5,
-            value: 25,
+            value: 20,
             type: "cartacea"
         }
         expect(() => {addGiftcard(giftCard)}).toThrow("invalid giftcard amount")
+    })
+
+    it("add negative amount of gift cards", () =>{
+        const giftCard: GiftcardType= {
+            amount: -2,
+            value: 10,
+            type: "cartacea"
+        }
+        expect(() => {addGiftcard(giftCard)}).toThrow("negative amount of giftcards")
     })
 
     it("get amount", () =>{
