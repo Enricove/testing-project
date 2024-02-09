@@ -1,5 +1,5 @@
 import { AmountType, GiftcardType, OrderType, UserType } from "./esempio/types";
-import { addGiftcard, newOrder } from "./utils";
+import { addGiftcard, getAmount, newOrder } from "./utils";
 
 describe("testcase create order", () =>{
     
@@ -100,7 +100,7 @@ describe("testcase add giftcard", ()=>{
     beforeEach(()=>{
          order = newOrder(user);
     })
-    it("", () =>{
+    it("add one giftcard", () =>{
         //add one gift card
         const giftCard: GiftcardType= {
             amount: 1,
@@ -111,7 +111,7 @@ describe("testcase add giftcard", ()=>{
         expect(order.giftCard10).toBe(1);
     })
 
-    it("", () =>{
+    it("add 3 giftcards", () =>{
         //add 3 gift cards
         const giftCard: GiftcardType= {
             amount: 1,
@@ -124,7 +124,7 @@ describe("testcase add giftcard", ()=>{
         expect(order.giftCard10).toBe(3);
     })
 
-    it("", () =>{
+    it("add different gift cards", () =>{
         //add different gift cards
         const giftCard1: GiftcardType= {
             amount: 1,
@@ -143,7 +143,7 @@ describe("testcase add giftcard", ()=>{
         expect(order.giftCard10).toBe(2);
         expect(order.giftCard100).toBe(4);
     })
-    it("", () =>{
+    it("add gift card of invalid type", () =>{
         //add gift card of invalid type
         const giftCard: GiftcardType= {
             amount: 1,
@@ -152,7 +152,7 @@ describe("testcase add giftcard", ()=>{
         }
         expect(() => {addGiftcard(order, giftCard)}).toThrow("invalid giftcard type")
     })
-    it("", () =>{
+    it("add gift card of invalid value", () =>{
         //add gift card of invalid value
         const giftCard: GiftcardType= {
             amount: 1,
@@ -180,7 +180,7 @@ describe("testcase add giftcard", ()=>{
         const amount: AmountType = getAmount(order);
         expect(amount.totale).toBe(420);
         expect(amount.iva).toBe(92.4);
-        expect(amount.totale).toBe(512.4);
+        expect(amount.daPagare).toBe(512.4);
     })
 
 })
