@@ -1,4 +1,4 @@
-import { OrderType, UserType } from "./esempio/types"
+import { GiftcardType, OrderType, UserType } from "./esempio/types"
 
 export const newOrder = (user: UserType) =>{
 
@@ -23,5 +23,14 @@ export const newOrder = (user: UserType) =>{
     }
     
     return order;
+}
+
+export const addGiftcard = (order: OrderType, giftcard: GiftcardType) => {
+    if(giftcard.type!="cartacea"&&giftcard.type!="digitale") throw new TypeError("invalid giftcard type")
+    if(giftcard.value==10) order.giftCard10+=giftcard.amount;
+    else if(giftcard.value==20)order.giftCard20+=giftcard.amount;
+    else if(giftcard.value==50)order.giftCard50+=giftcard.amount;
+    else if(giftcard.value==100)order.giftCard100+=giftcard.amount;
+    else throw new TypeError ("invalid giftcard value");
 }
 

@@ -1,5 +1,5 @@
 import { GiftcardType, OrderType, UserType } from "./esempio/types";
-import { newOrder } from "./utils";
+import { addGiftcard, newOrder } from "./utils";
 
 describe("testcase giftcard shop", () =>{
     
@@ -98,14 +98,14 @@ describe("testcase add giftcard", ()=>{
     let order: OrderType
 
     beforeEach(()=>{
-         order: OrderType = newOrder(user);
+         order = newOrder(user);
     })
     it("", () =>{
         //add one gift card
         const giftCard: GiftcardType= {
             amount: 1,
             value: 10,
-            type: "cartaceta"
+            type: "cartacea"
         }
         addGiftcard(order, giftCard)
         expect(order.giftCard10).toBe(1);
@@ -116,7 +116,7 @@ describe("testcase add giftcard", ()=>{
         const giftCard: GiftcardType= {
             amount: 1,
             value: 10,
-            type: "cartaceta"
+            type: "cartacea"
         }
         addGiftcard(order, giftCard);
         addGiftcard(order, giftCard);
@@ -129,7 +129,7 @@ describe("testcase add giftcard", ()=>{
         const giftCard1: GiftcardType= {
             amount: 1,
             value: 10,
-            type: "cartaceta"
+            type: "cartacea"
         }
 
         const giftCard2: GiftcardType= {
@@ -137,6 +137,7 @@ describe("testcase add giftcard", ()=>{
             value: 100,
             type: "digitale"
         }
+        addGiftcard(order, giftCard1);
         addGiftcard(order, giftCard1);
         addGiftcard(order, giftCard2);
         expect(order.giftCard10).toBe(2);
@@ -156,7 +157,7 @@ describe("testcase add giftcard", ()=>{
         const giftCard: GiftcardType= {
             amount: 1,
             value: 25,
-            type: "cartaceta"
+            type: "cartacea"
         }
         expect(() => {addGiftcard(order, giftCard)}).toThrow("invalid giftcard value")
     })
