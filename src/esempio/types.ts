@@ -7,8 +7,8 @@ export type UserType = {
 
 export type OrderType = {
     user: UserType
-    creationDate: Date;
-    updateDate: Date;
+    creationDate: Date
+    updateDate: Date
     giftCard10: number
     giftCard20: number
     giftCard50: number
@@ -18,4 +18,9 @@ export type GiftcardType = {
     amount: number, 
     value: number,
     type: string
+}
+export type AmountType = {
+    totale: number
+    iva: number
+    daPagare: number
 }

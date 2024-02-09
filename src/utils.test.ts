@@ -1,7 +1,7 @@
-import { GiftcardType, OrderType, UserType } from "./esempio/types";
+import { AmountType, GiftcardType, OrderType, UserType } from "./esempio/types";
 import { addGiftcard, newOrder } from "./utils";
 
-describe("testcase giftcard shop", () =>{
+describe("testcase create order", () =>{
     
     
     it("create new order", () =>{
@@ -160,6 +160,27 @@ describe("testcase add giftcard", ()=>{
             type: "cartacea"
         }
         expect(() => {addGiftcard(order, giftCard)}).toThrow("invalid giftcard value")
+    })
+
+    it("get amount", () =>{
+        const giftCard1: GiftcardType= {
+            amount: 1,
+            value: 10,
+            type: "cartacea"
+        }
+
+        const giftCard2: GiftcardType= {
+            amount: 4,
+            value: 100,
+            type: "digitale"
+        }
+        addGiftcard(order, giftCard1);
+        addGiftcard(order, giftCard1);
+        addGiftcard(order, giftCard2);
+        const amount: AmountType = getAmount(order);
+        expect(amount.totale).toBe(420);
+        expect(amount.iva).toBe(92.4);
+        expect(amount.totale).toBe(512.4);
     })
 
 })
