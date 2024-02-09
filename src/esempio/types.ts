@@ -14,3 +14,8 @@ export type OrderType = {
     giftCard50: number
     giftCard100: number
 }
+export type GiftcardType = {
+    amount: number, 
+    value: number,
+    type: string
+}
