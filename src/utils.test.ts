@@ -1,11 +1,10 @@
 import { AmountType, GiftcardType, OrderType, UserType } from "./esempio/types";
-import { addGiftcard, getAmount, newOrder } from "./utils";
+import { addGiftcard, getAmount, newOrder} from "./utils";
 
 describe("testcase create order", () =>{
     
-    
     it("create new order", () =>{
-        //pass user oject and gets an order object
+        //pass user object and gets an order object
         const user: UserType = {
             name: "enrico",
             surname: "vegliani",
@@ -98,34 +97,36 @@ describe("testcase add giftcard", ()=>{
     let order: OrderType
 
     beforeEach(()=>{
-         order = newOrder(user);
+         newOrder(user);
     })
+
     it("add one giftcard", () =>{
-        //add one gift card
         const giftCard: GiftcardType= {
             amount: 1,
             value: 10,
             type: "cartacea"
         }
-        addGiftcard(order, giftCard)
+        order = addGiftcard(giftCard)
+
         expect(order.giftCard10).toBe(1);
+        expect(order.creationDate!=order.updateDate).toBe(true);
     })
 
     it("add 3 giftcards", () =>{
-        //add 3 gift cards
         const giftCard: GiftcardType= {
             amount: 1,
             value: 10,
             type: "cartacea"
         }
-        addGiftcard(order, giftCard);
-        addGiftcard(order, giftCard);
-        addGiftcard(order, giftCard);
+        addGiftcard(giftCard);
+        addGiftcard(giftCard);
+        order = addGiftcard(giftCard);
+
+        
         expect(order.giftCard10).toBe(3);
     })
 
     it("add different gift cards", () =>{
-        //add different gift cards
         const giftCard1: GiftcardType= {
             amount: 1,
             value: 10,
@@ -137,29 +138,39 @@ describe("testcase add giftcard", ()=>{
             value: 100,
             type: "digitale"
         }
-        addGiftcard(order, giftCard1);
-        addGiftcard(order, giftCard1);
-        addGiftcard(order, giftCard2);
+        addGiftcard(giftCard1);
+        addGiftcard(giftCard1);
+        order = addGiftcard(giftCard2);
+
         expect(order.giftCard10).toBe(2);
         expect(order.giftCard100).toBe(4);
     })
+
     it("add gift card of invalid type", () =>{
-        //add gift card of invalid type
         const giftCard: GiftcardType= {
             amount: 1,
             value: 10,
             type: "inesistente"
         }
-        expect(() => {addGiftcard(order, giftCard)}).toThrow("invalid giftcard type")
+        expect(() => {addGiftcard(giftCard)}).toThrow("invalid giftcard type")
     })
+
     it("add gift card of invalid value", () =>{
-        //add gift card of invalid value
         const giftCard: GiftcardType= {
             amount: 1,
             value: 25,
             type: "cartacea"
         }
-        expect(() => {addGiftcard(order, giftCard)}).toThrow("invalid giftcard value")
+        expect(() => {addGiftcard(giftCard)}).toThrow("invalid giftcard value")
+    })
+
+    it("add gift card of invalid amount", () =>{
+        const giftCard: GiftcardType= {
+            amount: 1.5,
+            value: 25,
+            type: "cartacea"
+        }
+        expect(() => {addGiftcard(giftCard)}).toThrow("invalid giftcard amount")
     })
 
     it("get amount", () =>{
@@ -174,10 +185,10 @@ describe("testcase add giftcard", ()=>{
             value: 100,
             type: "digitale"
         }
-        addGiftcard(order, giftCard1);
-        addGiftcard(order, giftCard1);
-        addGiftcard(order, giftCard2);
-        const amount: AmountType = getAmount(order);
+        addGiftcard(giftCard1);
+        addGiftcard(giftCard1);
+        addGiftcard(giftCard2);
+        const amount: AmountType = getAmount();
         expect(amount.totale).toBe(420);
         expect(amount.iva).toBe(92.4);
         expect(amount.daPagare).toBe(512.4);

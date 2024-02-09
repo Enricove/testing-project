@@ -1,6 +1,9 @@
 import { AmountType, GiftcardType, OrderType, UserType } from "./esempio/types"
 
-export const newOrder = (user: UserType) =>{
+let order : OrderType 
+const vat = 0.22; //iva al 22%
+
+export const newOrder = (user: UserType):OrderType => {
 
     //validation
     if(user.name.length==0) throw new TypeError("invalid name");
@@ -9,10 +12,9 @@ export const newOrder = (user: UserType) =>{
     if(user.eMail.length==0) throw new TypeError ("invalid email");
     if(user.eMail.indexOf("@")==-1) throw new TypeError ("invalid email");
     if(user.eMail.indexOf(".")==-1) throw new TypeError ("invalid email");
-    //if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.eMail)) throw new Error("invalid email");
 
     const now: Date = new Date
-    const order : OrderType = {
+    order = {
         user: user,
         creationDate: now,
         updateDate: now,
@@ -25,23 +27,29 @@ export const newOrder = (user: UserType) =>{
     return order;
 }
 
-export const addGiftcard = (order: OrderType, giftcard: GiftcardType) => {
+export const addGiftcard = (giftcard: GiftcardType) :OrderType => {//must return order
+    //validation
     if(giftcard.type!="cartacea"&&giftcard.type!="digitale") throw new TypeError("invalid giftcard type")
+    if(!Number.isInteger(giftcard.amount)) throw new TypeError("invalid giftcard amount")
+    if(giftcard.value!=10&&giftcard.value!=20&&giftcard.value!=50&&giftcard.value!=100)throw new TypeError ("invalid giftcard value");
+
+    const now: Date = new Date;
+    order.updateDate = now;
+
     if(giftcard.value==10) order.giftCard10+=giftcard.amount;
     else if(giftcard.value==20)order.giftCard20+=giftcard.amount;
     else if(giftcard.value==50)order.giftCard50+=giftcard.amount;
     else if(giftcard.value==100)order.giftCard100+=giftcard.amount;
-    else throw new TypeError ("invalid giftcard value");
+    return order;
 }
 
-export const getAmount = (order: OrderType) => {
+export const getAmount = () => {
 let tot : number = order.giftCard10*10+order.giftCard20*20+order.giftCard50*50+order.giftCard100*100;
 
     const amount: AmountType = {
         totale: tot,
-        iva: tot*0.22,
-        daPagare: tot*1.22
+        iva: tot*vat,
+        daPagare: tot*(1+vat)
     }
     return amount
 }
-
